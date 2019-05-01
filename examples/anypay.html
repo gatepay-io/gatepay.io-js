@@ -1,0 +1,25 @@
+<html>
+<head>
+<script type="text/javascript" src="hprose.min.js"></script>
+<script type="text/javascript" src="gatepay.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+var appkey = 'your appkey of gatepay';
+var appsecret = 'your appsecret of gatepay';
+var params = {};
+params.price = 0.99;
+params.type ='wechat';
+params.out_order_id = gatepay.uuid();
+params.custom = 'terry';
+var sign = gatepay.sign(appkey,params,appsecret);
+gatepay.any(sign,function(response){
+	if(response.code == 100){
+    	gatepay.go(response.data.pay_url);
+    }
+  	else{
+    	alert(response.msg);
+    }
+});
+</script>
+</body>
