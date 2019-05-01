@@ -38,3 +38,30 @@ var appkey = 'your appkey from gatepay';
 var appsecret = 'your appsecret from gatepay';
 ```
 
+1. 任意金额支付 anypay,
+
+这个主要的特点是：金额是任意的，无需后台提前上传二维码，填写商品啥的。比如你的应用是不固定价格的服务，比如充值会员的服务，想充多少充多少。那这个比较合适搞。
+
+调用也很简单：
+
+```Javascript
+//注意，测试时，必须在真实网站环境测试，本地文件浏览模式不可以。
+var params = {};//定义请求参数
+params.price = 0.99;//任意金额都可以，商品价格。
+params.type ='wechat';//支付方式，如果是支付宝则填写alipay
+params.out_order_id = gatepay.uuid();//外部订单号，也就是你的系统产生的订单号，演示这里是用随机函数生成的编号
+params.custom = 'terry';//这个是携带的客户信息， 可以是任何字符串，比如你的网站是充值会员，这个可以是会员用户名，邮箱 或者电话之类的。
+//如果担心appsecret泄露，可以在服务端生成。这里直接用js的sdk执行了签名
+var sign = gatepay.sign(appkey,params,appsecret);//执行签名，获取携带签名的参数信息，
+//发起rpc请求
+gatepay.any(sign,function(response){
+	if(response.code == 100){
+		//代表请求成功
+    		gatepay.go(response.data.pay_url); //这个GO方法将会执行页面跳转，直接跳转到支付页面
+    	}
+    	else{
+    		alert(response.msg);//输出错误信息，自己处理咯。
+    	}
+});
+```
+
