@@ -23,3 +23,18 @@ the js sdk of gatepay
 
 ---------------------准备工作结束-------------------------------------
 
+接下来我们讲讲这个sdk怎么耍起来，很简单，在你的html里加载gatepay的js脚本：
+
+```html
+
+<script type="text/javascript" src="gatepay.io.js"></script>
+
+```
+
+现在进入正题，gatepay提供三种接口，分别是anypay，stablepay，grouppay，不论哪种接口，我们都需要使用gatepay后台提供我们的appkey和appsecret。
+
+```JavaScript
+var appkey = 'your appkey from gatepay';
+var appsecret = 'your appsecret from gatepay';
+```
+
